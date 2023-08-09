@@ -1,0 +1,67 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.palantir.javaformat:gradle-palantir-java-format:2.33.0'
+        classpath 'com.palantir.baseline:gradle-baseline-java:5.17.0'
+        classpath 'gradle.plugin.org.inferred:gradle-processors:3.7.0'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'com.github.ben-manes.versions' version '0.47.0'
+    id 'com.palantir.git-version' version '3.0.0'
+}
+
+allprojects {
+    apply plugin: 'com.palantir.java-format'
+}
+
+apply plugin: 'com.palantir.baseline-config'
+//apply plugin: 'com.palantir.baseline'
+apply plugin: 'com.palantir.baseline-checkstyle'
+apply plugin: 'com.palantir.baseline-error-prone'
+apply plugin: 'com.palantir.baseline-idea'
+
+version gitVersion()
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+group = 'com.palantir'
+
+def isNonStable = { String version ->
+    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+    def regex = /^[0-9,.v-]+(-r)?$/
+    return !stableKeyword && !(version ==~ regex)
+}
+
+dependencyUpdates {
+    // Example 1: reject all non stable versions
+    rejectVersionIf {
+        isNonStable(it.candidate.version)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    minHeapSize = "256m" // initial heap size
+    maxHeapSize = "4096m" // maximum heap size
+
+    useJUnitPlatform()
+    exclude '**/IsoImageTestsLargeIso.java'
+    exclude '**/OneOffTests.java'
+}
+
+dependencies {
+    testImplementation group: 'com.github.stephenc.java-iso-tools', name: 'loop-fs-iso-impl', version: '2.1.0'
+    testImplementation 'io.github.glytching:junit-extensions:2.6.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
+}
