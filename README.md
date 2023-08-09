@@ -50,7 +50,7 @@ dependencies are just for testing.
 ### Class Structure
 
 `GenericInternalIsoFile` is the standard file returned by IsoFileReader. `IsoFormatInternalDataFile` and
-UdfInternalDataFile are extensions of `GenericInternalIsoFile`. For most use cases `GenericInternalIsoFile`
+`UdfInternalDataFile` are extensions of `GenericInternalIsoFile`. For most use cases `GenericInternalIsoFile`
 can be used, if needed you can access those files as their more specific types and get additional metadata.
 
 `IsoFileReader` is the helper class that handles accessing the sub-readers of `TraditionalIsoReader` and `UdfIsoReader`.
