@@ -53,7 +53,7 @@ public class IsoImageLargeTests {
 
     @Test
     void getProcessedImageFiles() {
-        File isoFile = new File("./test_isos/LongFileName_ISO_only._nojoliet.iso");
+        File isoFile = new File("./test_isos/rocky.iso");
 
         try (IsoFileReader iso = new IsoFileReader(isoFile)) {
             System.out.println(iso.getCurrentSetting());
