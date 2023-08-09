@@ -4,8 +4,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.palantir.javaformat:gradle-palantir-java-format:2.33.0'
-        classpath 'com.palantir.baseline:gradle-baseline-java:5.17.0'
+        classpath 'com.palantir.javaformat:gradle-palantir-java-format:2.35.0'
+        classpath 'com.palantir.baseline:gradle-baseline-java:5.18.0'
         classpath 'gradle.plugin.org.inferred:gradle-processors:3.7.0'
     }
 }
@@ -26,13 +26,14 @@ apply plugin: 'com.palantir.baseline-checkstyle'
 apply plugin: 'com.palantir.baseline-error-prone'
 apply plugin: 'com.palantir.baseline-idea'
 
-version gitVersion()
-
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
 group = 'com.palantir'
+version gitVersion()
+description = 'Transactional distributed database layer'
 
+// dependencyUpdate Related
 def isNonStable = { String version ->
     def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
     def regex = /^[0-9,.v-]+(-r)?$/
@@ -62,6 +63,6 @@ test {
 dependencies {
     testImplementation group: 'com.github.stephenc.java-iso-tools', name: 'loop-fs-iso-impl', version: '2.1.0'
     testImplementation 'io.github.glytching:junit-extensions:2.6.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
 }
