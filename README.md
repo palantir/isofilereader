@@ -49,21 +49,20 @@ dependencies are just for testing.
 
 ### Class Structure
 
-GenericInternalIsoFile is the standard file returned by IsoFileReader. IsoFormatInternalDataFile and UdfInternalDataFile
-are extensions of GenericInternalIsoFile. For most use cases GenericInternalIsoFile can be used, if needed you can
-access those files as their more specific types and get additional metadata.
+`GenericInternalIsoFile` is the standard file returned by IsoFileReader. `IsoFormatInternalDataFile` and
+UdfInternalDataFile are extensions of `GenericInternalIsoFile`. For most use cases `GenericInternalIsoFile`
+can be used, if needed you can access those files as their more specific types and get additional metadata.
 
-IsoFileReader is the helper class that handles accessing the sub-readers of TraditionalIsoReader and UdfIsoReader.
+`IsoFileReader` is the helper class that handles accessing the sub-readers of `TraditionalIsoReader` and `UdfIsoReader`.
 
 #### ECMA-119/ISO-9660
 
-IsoFormatInternalDataFile encapsulates IsoFormatDirectoryRecord (the Raw Directory Records). TraditionalIsoReader parses
-these ISOs.
+`IsoFormatInternalDataFile` encapsulates `IsoFormatDirectoryRecord` (the Raw Directory Records). `TraditionalIsoReader` parses these ISOs.
 
 #### UDF
 
-(udf.types.files) FileEntry and (udf.types.files) FileIdentifierDescriptor are the raw records that are encapsulated in
-UdfInternalDataFile.
+(udf.types.files) `FileEntry` and (udf.types.files) `FileIdentifierDescriptor` are the raw records that are encapsulated in
+`UdfInternalDataFile`.
 
 ### Installing
 
@@ -81,21 +80,21 @@ repositories {
 ### Reading Generic Image
 
 Using the default constructor of `new IsoFileReader(iso);` automatically runs `findOptimalSettings()` against the image.
-You can also import an image, then modify how it is processed; this mostly refers to if you pruposefully want to disable
+You can also import an image, then modify how it is processed; this mostly refers to if you purposefully want to disable
 UDF or Rock Ridge usage.
 
 ```java
 // For an image which has UDF + ECMA-119/ISO-9660 data
 File isoFile = new File("./src/test/resources/small_only_udf_260.iso");
-try (IsoFileReader iso = new IsoFileReader(isoFile)) {
+try (IsoFileReader isoFileReader = new IsoFileReader(isoFile)) {
     // This will default to using UDF because that was detected
-    iso.setUdfModeInUse(false);
-    iso.findOptimalSettings();
+    isoFileReader.setUdfModeInUse(false);
+    isoFileReader.findOptimalSettings();
     // Now will be using the best table with Rock Ridge in the image
 
-    iso.getTraditionalIsoReader().setUseRockRidgeOverStandard(false);
+    isoFileReader.getTraditionalIsoReader().setUseRockRidgeOverStandard(false);
     // We also now have disabled Rock Ridge reading
-    GenericInternalIsoFile[] files = iso.getAllFiles();
+    GenericInternalIsoFile[] files = isoFileReader.getAllFiles();
     ...
 } catch (IOException | UdfFormatException e) {
     throw new RuntimeException(e);
@@ -106,17 +105,17 @@ try (IsoFileReader iso = new IsoFileReader(isoFile)) {
 
 ```java
 File isoFile = new File("./src/test/resources/small_only_udf_260.iso");
-try (IsoFileReader iso = new IsoFileReader(isoFile)) {
-    GenericInternalIsoFile[] files = iso.getAllFiles();
+try (IsoFileReader isoFileReader = new IsoFileReader(isoFile)) {
+    GenericInternalIsoFile[] files = isoFileReader.getAllFiles();
     // These files will be in a tree, you can use the following for a flat array if you want that
-    List<GenericInternalIsoFile> flatList = iso.convertTreeFilesToFlatList(files);
+    List<GenericInternalIsoFile> flatList = isoFileReader.convertTreeFilesToFlatList(files);
     for (GenericInternalIsoFile cycleFile : flatList) {
         // This gets data for each file, if your files are large, you probably want to stream instead
-        byte[] data = iso.getFileBytes(cycleFile);
+        byte[] data = isoFileReader.getFileBytes(cycleFile);
 
         // To not read all the data into memory at once, and read 2048 bytes at a time
         byte[] array = new byte[2048];
-        InputStream stream = iso.getFileStream(cycleFile);
+        InputStream stream = isoFileReader.getFileStream(cycleFile);
         int count = stream.read(array);
         // Array now has the first 2048 bytes
 
@@ -132,10 +131,10 @@ try (IsoFileReader iso = new IsoFileReader(isoFile)) {
 
 ### Different ways to read files
 
-Reading the directory as `IsoFormatInternalDataFile[] records = iso.getAllFilesAsInternalDataFiles();` gives an array of
+Reading the directory as `IsoFormatInternalDataFile[] records = isoFileReader.getAllFilesAsInternalDataFiles();` gives an array of
 files in the root directory, then each of those has child entries for files within it. An alternative is
-`GenericInternalIsoFile[] records = iso.getAllFiles();`, IsoFormatInternalDataFiles. With the IsoFormatInternalDataFiles
-you can `getUnderlyingRecord()` and access the IsoFormatDirectoryRecord within them, which allows all raw metadata
+`GenericInternalIsoFile[] records = isoFileReader.getAllFiles();`, `IsoFormatInternalDataFiles`. With the `IsoFormatInternalDataFiles`
+you can `getUnderlyingRecord()` and access the `IsoFormatDirectoryRecord` within them, which allows all raw metadata
 access. If you want all the files in a List over the hierarchical default format, use:
 `List<GenericInternalIsoFile> allFilesAsList = isoImage.convertTreeFilesToFlatList(isoImage.getAllFilesAsIsoFormatInternalDataFile());`.
 
@@ -143,11 +142,11 @@ access. If you want all the files in a List over the hierarchical default format
 
 ```java
 File isoFile = new File("./src/test/resources/CentOS-7-x86_64-Minimal-1908.iso");
-try (IsoFileReader iso = new IsoFileReader(isoFile)) {
-    IsoFormatInternalDataFile[] records = iso.getAllFilesAsIsoFormatInternalDataFile();
+try (IsoFileReader isoFileReader = new IsoFileReader(isoFile)) {
+    IsoFormatInternalDataFile[] records = isoFileReader.getAllFilesAsIsoFormatInternalDataFile();
     // If we know the first/only file on disc is a text document
     // Reading with this function forces ISO handling
-    byte[] data = iso.getIsoFormatInternalDataFileBytes(records[0]);
+    byte[] data = isoFileReader.getIsoFormatInternalDataFileBytes(records[0]);
     System.out.println(new String(data));
 } catch (IOException e) {
     //Iso was either not found, or error reading the file
@@ -158,12 +157,12 @@ try (IsoFileReader iso = new IsoFileReader(isoFile)) {
 
 ```java
 File isoFile = new File("./test_isos/windows.iso");
-try (IsoFileReader iso = new IsoFileReader(isoFile)) {
-    UdfInternalDataFile[] rootFiles = iso.getUdfIsoReader().getAllFiles();
+try (IsoFileReader isoFileReader = new IsoFileReader(isoFile)) {
+    UdfInternalDataFile[] rootFiles = isoFileReader.getUdfIsoReader().getAllFiles();
 
     // You can also mix and match the fetch methods
-    GenericInternalIsoFile[] files = iso.getAllFiles();
-    GenericInternalIsoFile bootWim = iso.getSpecificFileByName(files, "/sources/boot.wim");
+    GenericInternalIsoFile[] files = isoFileReader.getAllFiles();
+    GenericInternalIsoFile bootWim = isoFileReader.getSpecificFileByName(files, "/sources/boot.wim");
     System.out.println(bootWim.getFullFileName(File.separatorChar));
 
     FileIdentifierDescriptor udfData = ((UdfInternalDataFile) bootWim).getThisFileDescriptor();
@@ -181,9 +180,9 @@ class attribute. Below is an example of reading UDF file permissions.
 
 ```java
 File isoFile = new File("./test_isos/windows.iso");
-try (IsoFileReader iso = new IsoFileReader(isoFile)) {
-    GenericInternalIsoFile[] files = iso.getAllFiles();
-    GenericInternalIsoFile bootWim = iso.getSpecificFileByName(files, "/sources/boot.wim");
+try (IsoFileReader isoFileReader = new IsoFileReader(isoFile)) {
+    GenericInternalIsoFile[] files = isoFileReader.getAllFiles();
+    GenericInternalIsoFile bootWim = isoFileReader.getSpecificFileByName(files, "/sources/boot.wim");
     if (bootWim instanceof UdfInternalDataFile) {
         System.out.println("User Can Execute: "
             + ((UdfInternalDataFile) bootWim).getThisFileEntry().getFilePerms().canUserExecute());
@@ -234,7 +233,7 @@ for (String fileIv : filesIv) {
 ###### IV Image Format
 
 `I1|2048|10|4139925504|7b5fe66f47d7b09dba115d0153a807c0` is an example of an Image IV. They start with I1 to say Image
-and version 1 of IV (currently 1 exists), then how large the data samples will be. Each field is seperated by pipes.
+and version 1 of IV (currently 1 exists), then how large the data samples will be. Each field is separated by pipes.
 Followed by how many samples to take; with the default of 10, the ISO will be sampled at 10 evenly distributed
 locations. Then the total size of the image. Finally, the hash of the data sampled from those location at that sample
 size.
@@ -258,19 +257,19 @@ the library should be fully initialized to read the image instead.
 
 The Primary and Enhanced Volume descriptors are the entry point for an ECMA-119/ISO-9660 standard image. These
 descriptors are sometimes called the Table of Contents for the disk. It gives basic information about the image, and
-then a pointer to the root folder IsoFormatDirectoryRecord. The IsoFormatDirectoryRecord are then in a tree format out
+then a pointer to the root folder `IsoFormatDirectoryRecord`. The `IsoFormatDirectoryRecord` are then in a tree format out
 from the root with all the files and paths on the image.
 
 ### Library notes
 
-Some of the more core functions such as IsoFormatDirectoryRecord have a function to pull the raw bytes, then wrapper
+Some of the more core functions such as `IsoFormatDirectoryRecord` have a function to pull the raw bytes, then wrapper
 functions that are *AsLong(), *AsDate(), *AsString(); these functions handle the conversions of different fields into
 Java standard types. If you don't want to worry about a field being UTF-8 vs UTF-18BE vs other standards, then use the
 wrapper functions. If you have some other use case, the raw bytes are there for you.
 
-A single file can be represented as a IsoFormatDirectoryRecord, but those are the raw notes that are in the image,
-IsoFormatInternalDataFile is a wrapper around IsoFormatDirectoryRecord that makes them easier to work with, if memory is
-an issue you can raw process the Directory Records, but for simplicity most of the time IsoFormatInternalDataFile
+A single file can be represented as a `IsoFormatDirectoryRecord`, but those are the raw notes that are in the image,
+`IsoFormatInternalDataFile` is a wrapper around `IsoFormatDirectoryRecord` that makes them easier to work with, if memory is
+an issue you can raw process the Directory Records, but for simplicity most of the time `IsoFormatInternalDataFile`
 probably wants to be used.
 
 ### Rock Ridge and File Names
@@ -289,30 +288,30 @@ This means "abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd1234.txt
 
 Another system for noting these names is Rock Ridge, this is an extension that uses the "System Use" area of a files
 record. This allows however long file names you want. These can be stored in either the primary or enhanced tables. The
-function iso.findOptimalSettings(); will check which of these different types of file names exist on the disc; checking
+function `isoReader.findOptimalSettings();` will check which of these different types of file names exist on the disc; checking
 every volume descriptor, then checking for rock ridge under that descriptor. This function will then set the
 TableOfContentInUse to the optimal one, and set Rock Ridge to be enabled or disabled.
 
 There are many ways to get file names out of an image. A basic image may have a Primary and Enhanced volume descriptors,
-but it also can have several versions of those descriptors. iso.findOptimalSettings() will look at every table, and find
-the longest file names available, with and without Rock Ridge. IsoFormatDirectoryRecord (being the raw type) will return
-very short names compared to the Enhanced table, or Primary with Rock Ridge on. Using IsoInternalDataFile will check
+but it also can have several versions of those descriptors. `isoReader.findOptimalSettings()` will look at every table, and find
+the longest file names available, with and without Rock Ridge. `IsoFormatDirectoryRecord` (being the raw type) will return
+very short names compared to the Enhanced table, or Primary with Rock Ridge on. Using `IsoInternalDataFile` will check
 for you if Rock Ridge is enabled at the image level, then give you the best name it can.
 
-The raw type of IsoFormatDirectoryRecord can be faster to process than IsoFormatInternalDataFile, knowing this you can
+The raw type of `IsoFormatDirectoryRecord` can be faster to process than `IsoFormatInternalDataFile`, knowing this you can
 quickly convert between them to get the correct filename.
 
 ```java
-new IsoFormatInternalDataFile(singleRecord, iso.isUseRockRidgeOverStandard()).getFileName()
+new IsoFormatInternalDataFile(singleRecord, isoFileReader.isUseRockRidgeOverStandard()).getFileName()
 ```
 
 Below is a table where we were trying to find the file "51286396aa8cf471627d865ed743bc341cb587ead96c5da11e65d818945cd14d
 -filelists.sqlite.bz2" using different methods and showing what name comes back for
-IsoFormatDirectoryRecord.getFileIdentifierAsString() vs IsoFormatInternalDataFile.getFullFileName('/').
+`IsoFormatDirectoryRecord.getFileIdentifierAsString()` vs `IsoFormatInternalDataFile.getFullFileName('/')`.
 
 Pri is Primary Volume Descriptor. Enh is the Enhanced Volume Descriptor. NRR is no Rock Ridge. RR is Rock Ridge.
 
-|         | IsoDirectoryRecord                                                          | IsoInternalDataFile                                                                             |
+|         | `IsoDirectoryRecord`                                                          | `IsoInternalDataFile`                                                                             |
 |---------|-----------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
 | Pri/NRR | /REPODATA/51286396AA8CF471627D865ED74.BZ;1                                  | /REPODATA/51286396AA8CF471627D865ED74.BZ;1                                                      |
 | Enh/NRR | /repodata/51286396aa8cf471627d865ed743bc341cb587ead96c5da11e65d818945cd14d  | /repodata/51286396aa8cf471627d865ed743bc341cb587ead96c5da11e65d818945cd14d                      |
@@ -320,7 +319,7 @@ Pri is Primary Volume Descriptor. Enh is the Enhanced Volume Descriptor. NRR is 
 | Enh/RR  | /repodata/51286396aa8cf471627d865ed743bc341cb587ead96c5da11e65d818945cd14d  | /repodata/51286396aa8cf471627d865ed743bc341cb587ead96c5da11e65d818945cd14d                      |
 
 Depending on the authoring tool used to make the ISO, this may not always be true for which way to get filenames is best.
-iso.findOptimalSettings() will scan and find the best settings, the only downside is it can take some time.
+`isoReader.findOptimalSettings()` will scan and find the best settings, the only downside is it can take some time.
 
 ## Standards Information
 
