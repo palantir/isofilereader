@@ -1,0 +1,105 @@
+version: 2.1
+
+jobs:
+  build:
+    working_directory: ~/isofilereader
+    # Remove if parallelism is not desired
+    docker:
+      - image: cimg/openjdk:11.0
+    resource_class: large
+    environment:
+      TERM: dumb # necessary to keep gradle daemon alive
+      _JAVA_OPTIONS: "-XX:+HeapDumpOnOutOfMemoryError -Xmx1024m"
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx1024m"'
+      CIRCLE_TEST_REPORTS: "/home/circleci/project"
+      CIRCLE_ARTIFACTS: "/home/circleci/project"
+    steps:
+      - checkout
+      - run:
+          name: Creating dir for isos
+          command: |
+            mkdir ./test_isos
+      - run:
+          name: Creating artifacts and cache dir
+          command: |
+            mkdir ~/assets-cache
+      - restore_cache:
+          keys:
+            # Find the most recently generated cache used from any branch
+            - image-cache-v1-
+      - run:
+          name: Download Images that are needed
+          command: |
+              ./get_large_test_isos.sh
+      - save_cache:
+          key: image-cache-v1-{{ checksum "./test_isos/rocky.iso" }}-{{ checksum "./test_isos/ubuntu.iso" }}-{{ checksum "./test_isos/windows.iso" }}
+          paths:
+            - ./test_isos/rocky.iso
+            - ./test_isos/ubuntu.iso
+            - ./test_isos/windows.iso
+      - run:
+          name: Build library
+          command: |
+            ./gradlew build --scan --info --max-workers=2
+      - run:
+          name: Check
+          command: |
+            ./gradlew check test --max-workers=2
+      - run:
+          name: Copy Assets
+          command: |
+            cp ./build/libs/isofilereader-*.jar ~/assets-cache/isofilereader.jar
+      - persist_to_workspace:
+          root: ~/assets-cache
+          paths:
+            - ./*
+      - store_artifacts:
+          path: ~/assets-cache
+
+  deploy:
+    working_directory: ~/isofilereader
+    docker:
+      - image: cimg/openjdk:11.0
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/assets-cache
+      - run: git status
+      - deploy:
+          name: Publish release
+          command: |
+            ./gradlew --stacktrace publish
+
+  deploy_sandbox:
+    working_directory: ~/isofilereader
+    docker:
+      - image: cimg/openjdk:11.0
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/assets-cache
+      - run: git status
+      - deploy:
+          name: Publish to sandbox
+          command: |
+            ./gradlew --stacktrace publishToMavenLocal
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy_sandbox:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - develop
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - release

@@ -29,9 +29,13 @@ apply plugin: 'com.palantir.baseline-idea'
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
-group = 'com.palantir'
+group = 'com.palantir.isofilereader'
 version gitVersion()
-description = 'Transactional distributed database layer'
+description = 'A Java library to natively read ISO-9660 and UDF files'
+
+// Needed if baselineUpdateConfig is added to the build command
+// checkstyleMain.dependsOn baselineUpdateConfig
+// checkstyleTest.dependsOn baselineUpdateConfig
 
 // dependencyUpdate Related
 def isNonStable = { String version ->
@@ -65,4 +69,12 @@ dependencies {
     testImplementation 'io.github.glytching:junit-extensions:2.6.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+}
+
+// To accept gradle scans and publish them
+if (hasProperty('buildScan')) {
+    buildScan {
+        termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+        termsOfServiceAgree = 'yes'
+    }
 }

@@ -33,10 +33,7 @@ public class OneOffTests {
     void getBestFileType() {
         File rootFolder = new File("./");
         System.out.println("Operating from: " + rootFolder.getAbsolutePath());
-        File isoFile = new File("./test_isos/installdvd-c7-9-20210309.iso");
-        // File isoFile = new File("/Volumes/Storage/base images/installdvd-c7-9-20210309.iso");
-        // File isoFile = new File("./src/test/resources/TestImageLongName.iso");
-        // File isoFile = new File("./src/test/resources/iso_test.iso");
+        File isoFile = new File("./test_isos/rocky.iso");
 
         boolean findTheLongOne = false;
         try (IsoFileReader iso = new IsoFileReader(isoFile)) {
@@ -50,10 +47,8 @@ public class OneOffTests {
                     // Historically the previous library and zip handling dropped the / for root files, we will do that
                     String filename = isoInternalDataFile.getFullFileName(File.separatorChar);
                     System.out.println("Filename is: " + filename);
-                    if (filename.equalsIgnoreCase("/Packages/repodata"
-                            + "/a4e2b46586aa556c3b6f814dad5b16db5a669984d66b68e873586cd7c7253301"
-                            + "-cca56f3cffa18f1e52302dbfcf2f0250a94c8a37acd8347ed6317cb52c8369dc-c7-x86_64-comps.xml"
-                            + ".gz")) {
+                    if (filename.equalsIgnoreCase("/BaseOS/repodata/878c2f1defc6fd1f9553a7fe0230eb31b65d13c"
+                            + "e6045bb841aec881f4035e1b9-filelists.sqlite.bz2")) {
                         // c453cb827bb90bf482db48f60ce69e77
                         MessageDigest md = MessageDigest.getInstance("MD5");
 
@@ -61,14 +56,8 @@ public class OneOffTests {
                         byte[] digest = md.digest();
                         String myHash = DatatypeConverter.printHexBinary(digest).toLowerCase(Locale.ROOT);
                         findTheLongOne = true;
-                        Assertions.assertEquals("c453cb827bb90bf482db48f60ce69e77", myHash);
+                        Assertions.assertEquals("1f03a06b61106da5abf0d961c85c9186", myHash);
                     }
-                    if (filename.contains("a4e2b46586aa556c3b6f814dad5b16db5a669984d66b68e873586cd7c7")) {
-                        System.out.println("Filename is: " + filename);
-                        System.out.println("Loc Of File is: " + singleFile.getLocOfExtAsLong());
-                    }
-                    // This is failing because the parent relationship is not working as a tree when we get the files
-                    // This makes the full name lookup fail.
                 }
             }
         } catch (Exception e) {

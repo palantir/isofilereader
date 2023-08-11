@@ -247,6 +247,10 @@ public class IsoFileReader implements AutoCloseable {
                             .getDirectoryRecordForRootDirectoryAsIsoDirectorRecord();
                     break;
             }
+            if (!new String(vol.getStandardIdentifier(), StandardCharsets.UTF_8).equals("CD001")) {
+                // This table is not a standard table, or at least a standard we understand.
+                continue;
+            }
 
             IsoFormatInternalDataFile[] rootLevelDiscFolder = traditionalIsoReader.getInternalDataFiles(
                     getRawIsoWithAutoClose(),
