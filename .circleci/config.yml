@@ -95,11 +95,11 @@ workflows:
           filters:
             branches:
               only:
-                - develop
+                - test
       - deploy:
           requires:
             - build
           filters:
             branches:
               only:
-                - release
+                - develop
