@@ -33,6 +33,7 @@ group = 'com.palantir'
 version gitVersion()
 description = 'Transactional distributed database layer'
 
+// Needed if baselineUpdateConfig is added to the build command
 // checkstyleMain.dependsOn baselineUpdateConfig
 // checkstyleTest.dependsOn baselineUpdateConfig
 

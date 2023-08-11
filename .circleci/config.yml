@@ -23,10 +23,20 @@ jobs:
           name: Creating artifacts and cache dir
           command: |
             mkdir ~/assets-cache
+      - restore_cache:
+          keys:
+            # Find the most recently generated cache used from any branch
+            - image-cache-v1-
       - run:
           name: Download Images that are needed
           command: |
               ./get_large_test_isos.sh
+      - save_cache:
+          key: image-cache-v1-{{ checksum "./test_isos/rocky.iso" }}-{{ checksum "./test_isos/ubuntu.iso" }}-{{ checksum "./test_isos/windows.iso" }}
+          paths:
+            - ./test_isos/rocky.iso
+            - ./test_isos/ubuntu.iso
+            - ./test_isos/windows.iso
       - run:
           name: Build library
           command: |
