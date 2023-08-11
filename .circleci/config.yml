@@ -19,9 +19,6 @@ jobs:
           name: Creating dir for isos
           command: |
             mkdir ./test_isos
-      - cache/restore:
-          keys: |
-            v1-isofilereader-assets
       - run:
           name: Creating artifacts and cache dir
           command: |
@@ -42,10 +39,6 @@ jobs:
           name: Copy Assets
           command: |
             cp ./build/libs/isofilereader-*.jar ~/assets-cache/isofilereader.jar
-      - cache/save:
-          key: v1-isofilereader-assets
-          paths: |
-            ~/isofilereader/test_isos
       - persist_to_workspace:
           root: ~/assets-cache
           paths:
