@@ -33,6 +33,9 @@ group = 'com.palantir'
 version gitVersion()
 description = 'Transactional distributed database layer'
 
+// checkstyleMain.dependsOn baselineUpdateConfig
+// checkstyleTest.dependsOn baselineUpdateConfig
+
 // dependencyUpdate Related
 def isNonStable = { String version ->
     def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }

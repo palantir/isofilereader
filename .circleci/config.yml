@@ -30,7 +30,7 @@ jobs:
       - run:
           name: Build library
           command: |
-            ./gradlew baselineUpdateConfig build --scan --info --max-workers=2
+            ./gradlew build --scan --info --max-workers=2
       - run:
           name: Check
           command: |
