@@ -48,11 +48,10 @@ jobs:
       - run:
           name: Copy Assets
           command: |
-            cp ./build/libs/isofilereader-*.jar ~/assets-cache/isofilereader.jar
+            cp ./build/libs/isofilereader-*.jar ~/assets-cache/
       - persist_to_workspace:
-          root: ~/assets-cache
-          paths:
-            - ./*
+          root: /home/circleci
+          paths: [ project ]
       - store_artifacts:
           path: ~/assets-cache
 
@@ -61,9 +60,7 @@ jobs:
     docker:
       - image: cimg/openjdk:11.0
     steps:
-      - checkout
-      - attach_workspace:
-          at: ~/assets-cache
+      - attach_workspace: { at: /home/circleci }
       - run: git status
       - deploy:
           name: Publish release
@@ -75,9 +72,7 @@ jobs:
     docker:
       - image: cimg/openjdk:11.0
     steps:
-      - checkout
-      - attach_workspace:
-          at: ~/assets-cache
+      - attach_workspace: { at: /home/circleci }
       - run: git status
       - deploy:
           name: Publish to sandbox
