@@ -4,15 +4,15 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.palantir.javaformat:gradle-palantir-java-format:2.35.0'
-        classpath 'com.palantir.baseline:gradle-baseline-java:5.18.0'
+        classpath 'com.palantir.javaformat:gradle-palantir-java-format:2.39.0'
+        classpath 'com.palantir.baseline:gradle-baseline-java:5.31.0'
         classpath 'gradle.plugin.org.inferred:gradle-processors:3.7.0'
     }
 }
 
 plugins {
     id 'java'
-    id 'com.github.ben-manes.versions' version '0.47.0'
+    id 'com.github.ben-manes.versions' version '0.50.0'
     id 'com.palantir.git-version' version '3.0.0'
 }
 
@@ -67,8 +67,8 @@ test {
 dependencies {
     testImplementation group: 'com.github.stephenc.java-iso-tools', name: 'loop-fs-iso-impl', version: '2.1.0'
     testImplementation 'io.github.glytching:junit-extensions:2.6.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.1'
 }
 
 // To accept gradle scans and publish them
