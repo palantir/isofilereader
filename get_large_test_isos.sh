@@ -34,7 +34,7 @@ function downloadWindows() {
     else
         sha256sum ./test_isos/windows.iso
     fi
-    echo "should be: ef7312733a9F5d7d51cfa04ac497671995674ca5e1058d5164d6028f0938d668"
+    echo "should be: ef7312733a9f5d7d51cfa04ac497671995674ca5e1058d5164d6028f0938d668"
     # https://download.microsoft.com/download/c/1/1/c11d2ca5-967c-45c0-bc7d-2d9ca3f1fe07/Windows10Enterprise22H2HashValues.pdf
 }
 
