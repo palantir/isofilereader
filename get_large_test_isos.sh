@@ -34,7 +34,7 @@ function downloadWindows() {
     else
         sha256sum ./test_isos/windows.iso
     fi
-    echo "should be: EF7312733A9F5D7D51CFA04AC497671995674CA5E1058D5164D6028F0938D668"
+    echo "should be: ef7312733a9F5d7d51cfa04ac497671995674ca5e1058d5164d6028f0938d668"
     # https://download.microsoft.com/download/c/1/1/c11d2ca5-967c-45c0-bc7d-2d9ca3f1fe07/Windows10Enterprise22H2HashValues.pdf
 }
 
@@ -46,7 +46,7 @@ else
     if [ "$(uname -s)" == "Darwin" ]; then
         rockySha=$(shasum -a 256 ./test_isos/rocky.iso | awk '{print $1}')
     else
-        rockySha=$(sha256sum ./test_isos/rocky.iso)
+        rockySha=$(sha256sum ./test_isos/rocky.iso | awk '{print $1}')
     fi
     if [ "$rockySha" != "06505828e8d5d052b477af5ce62e50b938021f5c28142a327d4d5c075f0670dc" ]; then
         echo "rocky ISO sha256sum is not correct"
@@ -64,7 +64,7 @@ else
     if [ "$(uname -s)" == "Darwin" ]; then
         ubuntuSha=$(shasum -a 256 ./test_isos/ubuntu.iso | awk '{print $1}')
     else
-        ubuntuSha=$(sha256sum ./test_isos/ubuntu.iso)
+        ubuntuSha=$(sha256sum ./test_isos/ubuntu.iso | awk '{print $1}')
     fi
     if [ "$ubuntuSha" != "874452797430a94ca240c95d8503035aa145bd03ef7d84f9b23b78f3c5099aed" ]; then
         echo "ubuntu ISO sha256sum is not correct"
@@ -83,7 +83,7 @@ else
     if [ "$(uname -s)" == "Darwin" ]; then
         windowsSha=$(shasum -a 256 ./test_isos/windows.iso | awk '{print $1}')
     else
-        windowsSha=$(sha256sum ./test_isos/windows.iso)
+        windowsSha=$(sha256sum ./test_isos/windows.iso | awk '{print $1}')
     fi
     if [ "$windowsSha" != "ef7312733a9F5d7d51cfa04ac497671995674ca5e1058d5164d6028f0938d668" ]; then
         echo "windows ISO sha256sum is not correct"
