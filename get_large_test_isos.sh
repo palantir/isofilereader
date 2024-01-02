@@ -8,7 +8,7 @@ fi
 # The ./base/repodata/* files will be that long
 if [ ! -e "./test_isos/rocky.iso" ]; then
     echo "Downloading Rocky ISO"
-    curl -L https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.2-x86_64-minimal.iso -o ./test_isos/rocky.iso
+    curl -L https://dl.rockylinux.org/vault/rocky/9.2/isos/x86_64/Rocky-9.2-x86_64-minimal.iso -o ./test_isos/rocky.iso
     if [ "$(uname -s)" == "Darwin" ]; then
         shasum -a 256 ./test_isos/rocky.iso
     else
