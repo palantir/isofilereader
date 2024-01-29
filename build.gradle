@@ -28,9 +28,8 @@ apply plugin: 'com.palantir.baseline-checkstyle'
 apply plugin: 'com.palantir.baseline-error-prone'
 apply plugin: 'com.palantir.baseline-idea'
 apply plugin: 'com.palantir.external-publish-jar'
+apply plugin: 'com.palantir.baseline-java-versions'
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
 
 group = 'com.palantir.isofilereader'
 version gitVersion()
@@ -80,4 +79,8 @@ if (hasProperty('buildScan')) {
         termsOfServiceUrl = 'https://gradle.com/terms-of-service'
         termsOfServiceAgree = 'yes'
     }
+}
+
+javaVersions {
+    libraryTarget = 11
 }
