@@ -29,7 +29,7 @@ Standards: [ECMA-119/ISO 9660 Standard](https://www.ecma-international.org/wp-co
 
 Building is normal gradle,
 ```shell script
-./gradlew clean build check test
+./gradlew clean build check
 ```
 
 ### Publishing
@@ -45,7 +45,25 @@ dependencies are just for testing.
 ./gradlew dependencyUpdates
 ```
 
+There is also a plugin installed to check the dependency graphs health, use the following to check the state:
+```shell script
+./gradlew projectHealth
+```
+
 ## Usage 📦
+
+### Installing
+
+[Releases on Maven Central](https://mvnrepository.com/artifact/com.palantir.isofilereader/isofilereader)
+
+```groovy
+repositories {
+    maven {
+        url ''
+    }
+    implementation group: 'com.palantir', name: 'isofilereader', version: '$version'
+}
+```
 
 ### Class Structure
 
@@ -63,19 +81,6 @@ can be used, if needed you can access those files as their more specific types a
 
 (udf.types.files) `FileEntry` and (udf.types.files) `FileIdentifierDescriptor` are the raw records that are encapsulated in
 `UdfInternalDataFile`.
-
-### Installing
-
-[Releases]()
-
-```groovy
-repositories {
-    maven {
-        url ''
-    }
-    implementation group: 'com.palantir', name: 'isofilereader', version: '$version'
-}
-```
 
 ### Reading Generic Image
 

@@ -5,7 +5,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.palantir.baseline:gradle-baseline-java:5.31.0'
+        classpath 'com.palantir.baseline:gradle-baseline-java:5.36.0'
+        classpath 'com.palantir.gradle.externalpublish:gradle-external-publish-plugin:1.12.0'
         classpath 'com.palantir.javaformat:gradle-palantir-java-format:2.40.0'
         classpath 'gradle.plugin.org.inferred:gradle-processors:3.7.0'
     }
@@ -13,23 +14,22 @@ buildscript {
 
 plugins {
     id 'java'
-    id 'com.github.ben-manes.versions' version '0.50.0'
+    id 'com.github.ben-manes.versions' version '0.51.0'
     id 'com.palantir.git-version' version '3.0.0'
-    id 'com.palantir.external-publish' version '1.12.0'
+    id 'com.autonomousapps.dependency-analysis' version "1.29.0"
 }
 
 allprojects {
     apply plugin: 'com.palantir.java-format'
 }
 
-apply plugin: 'com.palantir.baseline-config'
 //apply plugin: 'com.palantir.baseline'
 apply plugin: 'com.palantir.baseline-checkstyle'
+apply plugin: 'com.palantir.baseline-config'
 apply plugin: 'com.palantir.baseline-error-prone'
 apply plugin: 'com.palantir.baseline-idea'
 apply plugin: 'com.palantir.external-publish-jar'
 apply plugin: 'com.palantir.baseline-java-versions'
-
 
 group = 'com.palantir.isofilereader'
 version gitVersion()
@@ -68,7 +68,7 @@ test {
 
 dependencies {
     testImplementation group: 'com.github.stephenc.java-iso-tools', name: 'loop-fs-iso-impl', version: '2.1.0'
-    testImplementation 'io.github.glytching:junit-extensions:2.6.0'
+    testImplementation 'javax.xml.bind:jaxb-api:2.3.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.1'
 }
