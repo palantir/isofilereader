@@ -8,6 +8,8 @@ buildscript {
         classpath 'com.palantir.baseline:gradle-baseline-java:5.36.0'
         classpath 'com.palantir.gradle.externalpublish:gradle-external-publish-plugin:1.15.0'
         classpath 'com.palantir.gradle.failure-reports:gradle-failure-reports:1.10.0'
+        classpath 'com.palantir.gradle.jdks:gradle-jdks:0.38.0'
+        classpath 'com.palantir.gradle.jdkslatest:gradle-jdks-latest:0.14.0'
         classpath 'com.palantir.javaformat:gradle-palantir-java-format:2.40.0'
         classpath 'gradle.plugin.org.inferred:gradle-processors:3.7.0'
     }
@@ -31,6 +33,7 @@ apply plugin: 'com.palantir.baseline-error-prone'
 apply plugin: 'com.palantir.baseline-idea'
 apply plugin: 'com.palantir.external-publish-jar'
 apply plugin: 'com.palantir.failure-reports'
+apply plugin: 'com.palantir.jdks.latest'
 apply plugin: 'com.palantir.baseline-java-versions'
 
 group = 'com.palantir.isofilereader'
