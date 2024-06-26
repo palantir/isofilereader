@@ -91,3 +91,7 @@ javaVersions {
     libraryTarget = 11
     runtime = 21
 }
+
+compileJava {
+    options.compilerArgs += ['--module-path', classpath.asPath]
+}
