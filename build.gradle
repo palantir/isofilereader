@@ -20,6 +20,7 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.51.0'
     id 'com.palantir.git-version' version '3.1.0'
     id 'com.autonomousapps.dependency-analysis' version "1.32.0"
+    id "de.undercouch.download" version "5.6.0"
 }
 
 allprojects {
@@ -71,6 +72,48 @@ test {
     exclude '**/IsoImageTestsLargeIso.java'
     exclude '**/OneOffTests.java'
 }
+
+task downloadRockyForTestingIfNotPresent(type: Download) {
+    src 'https://dl.rockylinux.org/vault/rocky/9.2/isos/x86_64/Rocky-9.2-x86_64-minimal.iso'
+    dest new File("${projectDir}/test_isos/", 'rocky.iso')
+    overwrite false
+    onlyIfModified true
+}
+
+task verifyRockyFile(type: Verify, dependsOn: downloadRockyForTestingIfNotPresent) {
+    src "${projectDir}/test_isos/rocky.iso"
+    algorithm 'SHA256'
+    checksum '06505828e8d5d052b477af5ce62e50b938021f5c28142a327d4d5c075f0670dc'
+}
+
+task downloadUbuntuForTestingIfNotPresent(type: Download) {
+    src 'https://old-releases.ubuntu.com/releases/kinetic/ubuntu-22.10-live-server-amd64.iso'
+    dest new File("${projectDir}/test_isos/", 'ubuntu.iso')
+    overwrite false
+    onlyIfModified true
+}
+
+task verifyUbuntuFile(type: Verify, dependsOn: downloadUbuntuForTestingIfNotPresent) {
+    src "${projectDir}/test_isos/ubuntu.iso"
+    algorithm 'SHA256'
+    checksum '874452797430a94ca240c95d8503035aa145bd03ef7d84f9b23b78f3c5099aed'
+}
+
+task downloadWindowsForTestingIfNotPresent(type: Download) {
+    // https://download.microsoft.com/download/c/1/1/c11d2ca5-967c-45c0-bc7d-2d9ca3f1fe07/Windows10Enterprise22H2HashValues.pdf
+    src 'https://go.microsoft.com/fwlink/p/?LinkID=2208844&clcid=0x409&culture=en-us&country=US'
+    dest new File("${projectDir}/test_isos/", 'windows.iso')
+    overwrite false
+    onlyIfModified true
+}
+
+task verifyWindowsFile(type: Verify, dependsOn: downloadWindowsForTestingIfNotPresent) {
+    src "${projectDir}/test_isos/windows.iso"
+    algorithm 'SHA256'
+    checksum 'ef7312733a9f5d7d51cfa04ac497671995674ca5e1058d5164d6028f0938d668'
+}
+
+test.dependsOn(verifyRockyFile, verifyUbuntuFile, verifyWindowsFile)
 
 dependencies {
     testImplementation group: 'com.github.stephenc.java-iso-tools', name: 'loop-fs-iso-impl', version: '2.1.0'
