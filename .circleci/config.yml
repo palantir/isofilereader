@@ -26,16 +26,6 @@ jobs:
             # Find the most recently generated cache used from any branch
             - image-cache-v1-
       - run:
-          name: Download Images that are needed
-          command: |
-              ./get_large_test_isos.sh
-      - save_cache:
-          key: image-cache-v1-{{ checksum "./test_isos/rocky.iso" }}-{{ checksum "./test_isos/ubuntu.iso" }}-{{ checksum "./test_isos/windows.iso" }}
-          paths:
-            - ./test_isos/rocky.iso
-            - ./test_isos/ubuntu.iso
-            - ./test_isos/windows.iso
-      - run:
           name: Build library
           command: |
             ./gradlew build --scan --info --max-workers=2
@@ -43,6 +33,12 @@ jobs:
           name: Check
           command: |
             ./gradlew check test --max-workers=2
+      - save_cache:
+          key: image-cache-v1-{{ checksum "./test_isos/rocky.iso" }}-{{ checksum "./test_isos/ubuntu.iso" }}-{{ checksum "./test_isos/windows.iso" }}
+          paths:
+            - ./test_isos/rocky.iso
+            - ./test_isos/ubuntu.iso
+            - ./test_isos/windows.iso
       - run:
           name: Copy Assets
           command: |
