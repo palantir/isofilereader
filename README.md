@@ -62,7 +62,9 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'com.palantir', name: 'isofilereader', version: '$version'
+    implementation group: 'com.palantir.isofilereader', name: 'isofilereader', version: '$version'
+    // OR
+    // implementation 'com.palantir.isofilereader:isofilereader:0.6.0'
 }
 ```
 
