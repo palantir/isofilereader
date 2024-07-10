@@ -58,9 +58,10 @@ There is also a plugin installed to check the dependency graphs health, use the 
 
 ```groovy
 repositories {
-    maven {
-        url ''
-    }
+    mavenCentral()
+}
+
+dependencies {
     implementation group: 'com.palantir', name: 'isofilereader', version: '$version'
 }
 ```
