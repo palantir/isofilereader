@@ -117,7 +117,7 @@ task verifyWindowsFile(type: Verify, dependsOn: downloadWindowsForTestingIfNotPr
 }
 
 test.dependsOn(verifyRockyFile, verifyUbuntuFile, verifyWindowsFile)
-
+publishMavenPublicationToMavenLocal.dependsOn(test)
 dependencies {
     testImplementation group: 'com.github.stephenc.java-iso-tools', name: 'loop-fs-iso-impl', version: '2.1.0'
     testImplementation 'javax.xml.bind:jaxb-api:2.3.1'
