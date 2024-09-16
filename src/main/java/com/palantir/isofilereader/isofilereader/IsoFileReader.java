@@ -216,7 +216,7 @@ public class IsoFileReader implements AutoCloseable {
      * <a href="https://web.archive.org/web/20170404043745/http://www.ymi.com/ymi/sites/default/files/pdf/Rockridge.pdf">Rock Ridge</a>
      * Note this is done with the default constructor.
      *
-     *  @throws IOException Error reading from the ISO in getting the headers
+     * @throws IOException Error reading from the ISO in getting the headers
      */
     public void findOptimalSettings() throws IOException {
         if (udfModeInUse == 0 && udfIsoReader.checkForUdfData()) {
@@ -393,7 +393,12 @@ public class IsoFileReader implements AutoCloseable {
         if (!paddedFilename.startsWith(File.separator)) {
             paddedFilename = File.separator + paddedFilename;
         }
+
         String normalizedFilename = paddedFilename.replace('\\', '/');
+        if ("/".equals(normalizedFilename)) {
+            return Optional.of(files[0]);
+        }
+
         String[] splitPath = normalizedFilename.split("/");
         return fileSearcher(files, splitPath, 0);
     }
