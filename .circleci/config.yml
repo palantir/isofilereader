@@ -65,6 +65,8 @@ jobs:
           name: Download Assets and Build
           no_output_timeout: 20m
           command: |
+            ./gradle/gradle-jdks-setup.sh
+            ./jdk_scan.sh
             ./gradlew --parallel --stacktrace --continue --max-workers=2 build -Porg.gradle.java.installations.fromEnv=JAVA_HOME11,JAVA_HOME17,JAVA_HOME21,JAVA_HOME
       - *check-no-files-changed
       - persist_to_workspace:
