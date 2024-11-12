@@ -20,7 +20,7 @@ aliases:
 jobs:
 
   check:
-    docker: [{ image: 'cimg/openjdk:11.0.22-node' }]
+    docker: [{ image: 'cimg/openjdk:11.0-node' }]
     resource_class: large
     environment:
       CIRCLE_TEST_REPORTS: /home/circleci/junit
@@ -65,6 +65,8 @@ jobs:
           name: Download Assets and Build
           no_output_timeout: 20m
           command: |
+            ./gradle/gradle-jdks-setup.sh
+            source ./jdk_scan.sh
             ./gradlew --parallel --stacktrace --continue --max-workers=2 build -Porg.gradle.java.installations.fromEnv=JAVA_11_HOME,JAVA_17_HOME,JAVA_21_HOME,JAVA_HOME
       - *check-no-files-changed
       - persist_to_workspace:
@@ -83,7 +85,7 @@ jobs:
       - store_artifacts: { path: ~/artifacts }
 
   publish:
-    docker: [{ image: 'cimg/openjdk:11.0.22-node' }]
+    docker: [{ image: 'cimg/openjdk:11.0-node' }]
     resource_class: medium
     environment:
       CIRCLE_TEST_REPORTS: /home/circleci/junit
