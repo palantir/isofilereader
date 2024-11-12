@@ -66,7 +66,7 @@ jobs:
           no_output_timeout: 20m
           command: |
             ./gradle/gradle-jdks-setup.sh
-            ./jdk_scan.sh
+            source ./jdk_scan.sh
             ./gradlew --parallel --stacktrace --continue --max-workers=2 build -Porg.gradle.java.installations.fromEnv=JAVA_11_HOME,JAVA_17_HOME,JAVA_21_HOME,JAVA_HOME
       - *check-no-files-changed
       - persist_to_workspace:
