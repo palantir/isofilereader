@@ -77,3 +77,6 @@ ssl/
 out/
 
 test_isos/
+
+# Gradle JDKs setup
+!gradle/*

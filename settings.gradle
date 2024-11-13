@@ -1,2 +1,12 @@
+buildscript {
+    repositories {
+        mavenCentral() { metadataSources { mavenPom(); ignoreGradleMetadataRedirection() } }
+        gradlePluginPortal() { metadataSources { mavenPom(); ignoreGradleMetadataRedirection() } }
+    }
+    dependencies {
+        classpath 'com.palantir.gradle.jdks:gradle-jdks-settings:0.56.0'
+    }
+}
+apply plugin: 'com.palantir.jdks.settings'
 rootProject.name = 'isofilereader'
 // throw new RuntimeException('''The excavator failed to run properly - exited with code 1 and output:\n\n''' + file('gradle/exception').text + '\n\n')
