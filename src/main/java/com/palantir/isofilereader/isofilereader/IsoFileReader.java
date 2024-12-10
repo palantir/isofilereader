@@ -315,6 +315,7 @@ public class IsoFileReader implements AutoCloseable {
      * @return byte array of the data
      * @throws IOException failed to read underlying ISO file
      */
+    @SuppressWarnings("for-rollout:PreferSafeLoggableExceptions")
     public byte[] getFileBytes(GenericInternalIsoFile file) throws IOException {
         long dataSize = file.getSize();
         byte[] data = new byte[(int) dataSize];
@@ -573,6 +574,7 @@ public class IsoFileReader implements AutoCloseable {
      * @throws IOException Opening the image can fail resulting in a IOException
      * @throws NoSuchAlgorithmException MD5 is used to verify the IV, if MD5 is not in the local JDK this will fail
      */
+    @SuppressWarnings("for-rollout:PreferSafeLoggableExceptions")
     public static Optional<byte[]> getFileDataWithIVs(RandomAccessFile rafFile, String imageIv, String fileIv)
             throws IOException, NoSuchAlgorithmException {
         /*
