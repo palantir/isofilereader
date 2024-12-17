@@ -99,6 +99,7 @@ public class TraditionalIsoReader {
      * @return Array of data files
      * @throws IOException can be thrown if file can not be read
      */
+    @SuppressWarnings("for-rollout:PreferSafeLoggableExceptions")
     public final IsoFormatInternalDataFile[] getInternalDataFiles(
             RandomAccessFile file, long logicalSector, long size, String parent) throws IOException {
         byte[] headerInfo = new byte[IsoFormatConstant.BYTES_PER_SECTOR];
