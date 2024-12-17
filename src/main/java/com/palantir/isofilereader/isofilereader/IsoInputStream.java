@@ -178,6 +178,7 @@ public class IsoInputStream extends InputStream {
      * @param seekLoc bytes to seek in
      * @throws IOException if seek error occurs, either too far or failed ot read at that location
      */
+    @SuppressWarnings("for-rollout:PreferSafeLoggableExceptions")
     public void seek(long seekLoc) throws IOException {
         if (startingLoc + seekLoc > getLength()) {
             throw new IOException("Seeking past end of file");
@@ -205,8 +206,8 @@ public class IsoInputStream extends InputStream {
      * @return byte array of data in area
      * @throws IOException error in reading underlying media
      */
+    @SuppressWarnings({"ReadReturnValueIgnored", "for-rollout:PreferSafeLoggableExceptions"})
     @Override
-    @SuppressWarnings("ReadReturnValueIgnored")
     public byte[] readNBytes(int len) throws IOException {
         if (len < 0) {
             throw new IllegalArgumentException("len < 0");
@@ -279,6 +280,7 @@ public class IsoInputStream extends InputStream {
      * @return length of file transferred in bytes
      * @throws IOException read IO exception can occur if there is a read error with the underlying media
      */
+    @SuppressWarnings("for-rollout:PreferSafeLoggingPreconditions")
     @Override
     public long transferTo(OutputStream out) throws IOException {
         Objects.requireNonNull(out, "out");

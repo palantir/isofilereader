@@ -225,6 +225,7 @@ public class SpeedComparisonsTests {
 
         for (int i = 0; i < newTimings.length; i++) {
             startTime = System.currentTimeMillis();
+            @SuppressWarnings("for-rollout:UnnecessaryAsync")
             AtomicInteger filesFound = new AtomicInteger();
             // I am using precomputed settings for this image, because the other library doesnt even check for those,
             // so its only fair that I dont have to take the scan time into account!
@@ -311,6 +312,7 @@ public class SpeedComparisonsTests {
 
         for (int i = 0; i < newTimings.length; i++) {
             startTime = System.currentTimeMillis();
+            @SuppressWarnings("for-rollout:UnnecessaryAsync")
             AtomicInteger filesFound = new AtomicInteger();
 
             String imageIv = "I1|2048|10|1610940416|750c30c146c68b40dc812b4f9522a23c";
@@ -346,6 +348,7 @@ public class SpeedComparisonsTests {
 
         for (int i = 0; i < newTimings.length; i++) {
             startTime = System.currentTimeMillis();
+            @SuppressWarnings("for-rollout:UnnecessaryAsync")
             AtomicInteger filesFound = new AtomicInteger();
 
             String imageIv = "I1|2048|10|1610940416|750c30c146c68b40dc812b4f9522a23c";
@@ -381,6 +384,7 @@ public class SpeedComparisonsTests {
 
         for (int i = 0; i < newTimings.length; i++) {
             startTime = System.currentTimeMillis();
+            @SuppressWarnings("for-rollout:UnnecessaryAsync")
             AtomicInteger filesFound = new AtomicInteger();
 
             String imageIv = "I1|2048|10|1610940416|750c30c146c68b40dc812b4f9522a23c";
@@ -417,6 +421,7 @@ public class SpeedComparisonsTests {
 
         for (int i = 0; i < newTimings.length; i++) {
             startTime = System.currentTimeMillis();
+            @SuppressWarnings("for-rollout:UnnecessaryAsync")
             AtomicInteger filesFound = new AtomicInteger();
             // RandomAccessFile rawIso = new RandomAccessFile(isoFile, "r");
 
