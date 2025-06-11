@@ -89,7 +89,7 @@ task verifyRockyFile(type: Verify, dependsOn: downloadRockyForTestingIfNotPresen
 }
 
 task downloadUbuntuForTestingIfNotPresent(type: Download) {
-    src 'https://old-releases.ubuntu.com/releases/kinetic/ubuntu-22.10-live-server-amd64.iso'
+    src 'https://www.releases.ubuntu.com/20.04/ubuntu-20.04.6-desktop-amd64.iso'
     dest new File("${projectDir}/test_isos/", 'ubuntu.iso')
     overwrite false
     onlyIfModified true
@@ -99,7 +99,7 @@ task downloadUbuntuForTestingIfNotPresent(type: Download) {
 task verifyUbuntuFile(type: Verify, dependsOn: downloadUbuntuForTestingIfNotPresent) {
     src "${projectDir}/test_isos/ubuntu.iso"
     algorithm 'SHA256'
-    checksum '874452797430a94ca240c95d8503035aa145bd03ef7d84f9b23b78f3c5099aed'
+    checksum '510ce77afcb9537f198bc7daa0e5b503b6e67aaed68146943c231baeaab94df1'
 }
 
 task downloadWindowsForTestingIfNotPresent(type: Download) {
