@@ -135,7 +135,7 @@ if (hasProperty('buildScan')) {
 }
 
 javaVersions {
-    libraryTarget = 11
+    libraryTarget = 17
     runtime = 21
 }
 
