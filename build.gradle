@@ -82,6 +82,12 @@ isos.each { name ->
         overwrite false
         onlyIfModified true
         retries 5
+        connectTimeout 30000
+        readTimeout 600000
+
+        // Download to temp file first, then move on success
+        // This prevents partial files from being left behind
+        tempAndMove true
     }
 
     tasks.register("verify${name.capitalize()}File", Verify) {
