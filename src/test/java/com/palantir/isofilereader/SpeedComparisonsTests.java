@@ -351,11 +351,11 @@ public class SpeedComparisonsTests {
 
             String imageIv = "I1|2048|10|2252013568|1a047aeaa228ea8b9fd713715f383420";
             String[] filesIv = {
-                    "F1|2048|4|158787180|526015|/isolinux/initrd.img|446aea6f7e4e2342e338fa61e160c8d0",
-                    "F1|2048|4|14916424|603548|/isolinux/vmlinuz|1593e0e4d3554f5db52fedbe2f24c402",
-                    "F1|2048|4|1500|611087|/.treeinfo|86b2c63b1e47ed585759b9005c6885e1",
-                    "F1|2048|4|1062793216|7073|/images/install.img|862761503bb35f58fd5e8cfcbde4d834",
-                    "F1|2048|4|7305216|177|/images/efiboot.img|4577102270ea904d709f913146cfb782"
+                "F1|2048|4|158787180|526015|/isolinux/initrd.img|446aea6f7e4e2342e338fa61e160c8d0",
+                "F1|2048|4|14916424|603548|/isolinux/vmlinuz|1593e0e4d3554f5db52fedbe2f24c402",
+                "F1|2048|4|1500|611087|/.treeinfo|86b2c63b1e47ed585759b9005c6885e1",
+                "F1|2048|4|1062793216|7073|/images/install.img|862761503bb35f58fd5e8cfcbde4d834",
+                "F1|2048|4|7305216|177|/images/efiboot.img|4577102270ea904d709f913146cfb782"
             };
 
             for (String fileIv : filesIv) {
@@ -386,11 +386,11 @@ public class SpeedComparisonsTests {
 
             String imageIv = "I1|2048|10|2252013568|1a047aeaa228ea8b9fd713715f383420";
             String[] filesIv = {
-                    "F1|2048|4|158787180|526015|/isolinux/initrd.img|446aea6f7e4e2342e338fa61e160c8d0",
-                    "F1|2048|4|14916424|603548|/isolinux/vmlinuz|1593e0e4d3554f5db52fedbe2f24c402",
-                    "F1|2048|4|1500|611087|/.treeinfo|86b2c63b1e47ed585759b9005c6885e1",
-                    "F1|2048|4|1062793216|7073|/images/install.img|862761503bb35f58fd5e8cfcbde4d834",
-                    "F1|2048|4|7305216|177|/images/efiboot.img|4577102270ea904d709f913146cfb782"
+                "F1|2048|4|158787180|526015|/isolinux/initrd.img|446aea6f7e4e2342e338fa61e160c8d0",
+                "F1|2048|4|14916424|603548|/isolinux/vmlinuz|1593e0e4d3554f5db52fedbe2f24c402",
+                "F1|2048|4|1500|611087|/.treeinfo|86b2c63b1e47ed585759b9005c6885e1",
+                "F1|2048|4|1062793216|7073|/images/install.img|862761503bb35f58fd5e8cfcbde4d834",
+                "F1|2048|4|7305216|177|/images/efiboot.img|4577102270ea904d709f913146cfb782"
             };
 
             for (String fileIv : filesIv) {
@@ -423,11 +423,11 @@ public class SpeedComparisonsTests {
 
             String imageIv = "I1|2048|10|2252013568|1a047aeaa228ea8b9fd713715f383420";
             String[] filesIv = {
-                    "F1|2048|4|158787180|526015|/isolinux/initrd.img|446aea6f7e4e2342e338fa61e160c8d0",
-                    "F1|2048|4|14916424|603548|/isolinux/vmlinuz|1593e0e4d3554f5db52fedbe2f24c402",
-                    "F1|2048|4|1500|611087|/.treeinfo|86b2c63b1e47ed585759b9005c6885e1",
-                    "F1|2048|4|1062793216|7073|/images/install.img|862761503bb35f58fd5e8cfcbde4d834",
-                    "F1|2048|4|7305216|177|/images/efiboot.img|4577102270ea904d709f913146cfb782"
+                "F1|2048|4|158787180|526015|/isolinux/initrd.img|446aea6f7e4e2342e338fa61e160c8d0",
+                "F1|2048|4|14916424|603548|/isolinux/vmlinuz|1593e0e4d3554f5db52fedbe2f24c402",
+                "F1|2048|4|1500|611087|/.treeinfo|86b2c63b1e47ed585759b9005c6885e1",
+                "F1|2048|4|1062793216|7073|/images/install.img|862761503bb35f58fd5e8cfcbde4d834",
+                "F1|2048|4|7305216|177|/images/efiboot.img|4577102270ea904d709f913146cfb782"
             };
 
             for (String fileIv : filesIv) {
