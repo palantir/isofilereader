@@ -59,7 +59,7 @@ There is also a plugin installed to check the dependency graphs health, use the 
 While the library is compiled for Java 11, there is not anything other than tests keeping it from going to 8.
 To upgrade some of the Palantir plugins in Gradle, eventually the library will need to go to Java 17, then the latest-jdk
 plugin requires Java 21, requiring a push to 21. While the Java ecosystem is quickly getting to 17+ I want to leave this library
- on 11 for now in-case it helps people stuck on older versions.
+ on 11 for now in-case it helps people stuck on older versions. Palantir tends to bump Java versions frequently compared to industry.
 
 ## Usage 📦
 

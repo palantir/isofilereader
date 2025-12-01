@@ -1,0 +1,9 @@
+# ISO Test Files
+rocky.url=https://dl.rockylinux.org/vault/rocky/9.2/isos/x86_64/Rocky-9.2-x86_64-minimal.iso
+rocky.checksum=06505828e8d5d052b477af5ce62e50b938021f5c28142a327d4d5c075f0670dc
+
+ubuntu.url=https://www.releases.ubuntu.com/20.04/ubuntu-20.04.6-desktop-amd64.iso
+ubuntu.checksum=510ce77afcb9537f198bc7daa0e5b503b6e67aaed68146943c231baeaab94df1
+
+windows.url=https://go.microsoft.com/fwlink/p/?LinkID=2208844&clcid=0x409&culture=en-us&country=US
+windows.checksum=ef7312733a9f5d7d51cfa04ac497671995674ca5e1058d5164d6028f0938d668
