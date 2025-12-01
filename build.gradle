@@ -88,6 +88,7 @@ isos.each { name ->
         // Download to temp file first, then move on success
         // This prevents partial files from being left behind
         tempAndMove true
+        // There are multiple workers, you know in circle the job is done when you see a verify task
     }
 
     tasks.register("verify${name.capitalize()}File", Verify) {
