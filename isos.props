@@ -1,0 +1,13 @@
+# ISO Test Files
+# The public mirrors seem to get heavy traffic, using alternatives
+
+# rocky.url=https://dl.rockylinux.org/vault/rocky/9.6/isos/x86_64/Rocky-9.6-x86_64-minimal.iso
+rocky.url=https://mirror.cs.vt.edu/pub/rocky/9.6/isos/x86_64/Rocky-9.6-x86_64-minimal.iso
+rocky.checksum=aed9449cf79eb2d1c365f4f2561f923a80451b3e8fdbf595889b4cf0ac6c58b8
+
+# ubuntu.url=https://www.releases.ubuntu.com/20.04/ubuntu-20.04.6-desktop-amd64.iso
+ubuntu.url=https://mirror.pilotfiber.com/ubuntu-iso/20.04.6/ubuntu-20.04.6-desktop-amd64.iso
+ubuntu.checksum=510ce77afcb9537f198bc7daa0e5b503b6e67aaed68146943c231baeaab94df1
+
+windows.url=https://go.microsoft.com/fwlink/p/?LinkID=2208844&clcid=0x409&culture=en-us&country=US
+windows.checksum=ef7312733a9f5d7d51cfa04ac497671995674ca5e1058d5164d6028f0938d668

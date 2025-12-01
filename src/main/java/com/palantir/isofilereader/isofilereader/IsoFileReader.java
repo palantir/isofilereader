@@ -635,7 +635,7 @@ public class IsoFileReader implements AutoCloseable {
 
     /**
      * Get the data in a file from an image, initialized by the image and file IVs, returning an InputStream. This
-     * function is not thread safe,since it will access your RandomAccessFile given and use that in the InputStream.
+     * function is not thread safe, since it will access your RandomAccessFile given and use that in the InputStream.
      *
      * @param rafFile RandomAccessFile that will back the input stream
      * @param imageIv Initialization vector of the image, gotten from another time when the full library was used
