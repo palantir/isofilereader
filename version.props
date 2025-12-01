@@ -1,6 +1,6 @@
 # ISO Test Files
-rocky.url=https://dl.rockylinux.org/vault/rocky/9.2/isos/x86_64/Rocky-9.2-x86_64-minimal.iso
-rocky.checksum=06505828e8d5d052b477af5ce62e50b938021f5c28142a327d4d5c075f0670dc
+rocky.url=https://dl.rockylinux.org/vault/rocky/9.6/isos/x86_64/Rocky-9.6-x86_64-minimal.iso
+rocky.checksum=aed9449cf79eb2d1c365f4f2561f923a80451b3e8fdbf595889b4cf0ac6c58b8
 
 ubuntu.url=https://www.releases.ubuntu.com/20.04/ubuntu-20.04.6-desktop-amd64.iso
 ubuntu.checksum=510ce77afcb9537f198bc7daa0e5b503b6e67aaed68146943c231baeaab94df1

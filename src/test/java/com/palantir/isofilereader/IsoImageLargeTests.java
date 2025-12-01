@@ -422,7 +422,7 @@ public class IsoImageLargeTests {
             InputStream bootWimFileStream = iso.getFileStream(bootWim.get());
             String generatedMd5 = Helpers.getMd5FromStream(bootWimFileStream);
 
-            Assertions.assertEquals("5e4052974afb36003d35170a9fba5c22", generatedMd5);
+            Assertions.assertEquals("46f50ddd258d7e15e36164838447174a", generatedMd5);
         } catch (Exception e) {
             Assertions.fail("Could not get header", e);
         }
