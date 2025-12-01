@@ -7,12 +7,12 @@ buildscript {
     dependencies {
         classpath 'com.palantir.gradle.jdks:gradle-jdks:0.69.0'
         classpath 'com.palantir.gradle.jdkslatest:gradle-jdks-latest:0.24.0'
-        classpath 'com.palantir.baseline:gradle-baseline-java:6.74.0'
+        // Purposefully staying on this old version of baseline, going above 6.0.0 requires all tooling to be JDK 17+ and gradle-jdks only supports 11 OR 21+
+        classpath 'com.palantir.baseline:gradle-baseline-java:5.72.0'
         classpath 'com.palantir.gradle.externalpublish:gradle-external-publish-plugin:1.27.0'
         classpath 'com.palantir.gradle.failure-reports:gradle-failure-reports:1.18.0'
         classpath 'com.palantir.gradle.idea-configuration:gradle-idea-configuration:0.8.0'
         classpath 'com.palantir.javaformat:gradle-palantir-java-format:2.72.0'
-        classpath 'com.palantir.suppressible-error-prone:gradle-suppressible-error-prone:2.26.0'
     }
 }
 
