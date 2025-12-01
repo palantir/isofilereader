@@ -72,7 +72,7 @@ test {
 
 // Download ISO to test against
 def isoProps = new Properties()
-file("versions.props").withInputStream { isoProps.load(it) }
+file("isos.props").withInputStream { isoProps.load(it) }
 
 def isos = ['rocky', 'ubuntu', 'windows']
 isos.each { name ->
