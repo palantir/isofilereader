@@ -52,9 +52,9 @@ jobs:
 
             echo "Detected tag build, deleting all tags except '$CIRCLE_TAG' which point to HEAD: [${TAGS_TO_DELETE/$'\n'/,}]"
             echo "$TAGS_TO_DELETE" | while read -r TAG; do git tag -d "$TAG" 1>/dev/null; done
-      - restore_cache: { key: 'gradle-wrapper-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}' }
-      - restore_cache: { key: 'check-gradle-cache-v1-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}' }
-      - restore_cache: { key: 'check-iso-v1-{{ checksum "isos.props" }}-{{ checksum "build.gradle" }}' }
+      - restore_cache: { key: 'gradle-wrapper-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum ".circleci/config.yml" }}' }
+      - restore_cache: { key: 'gradle-cache-v1-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}-{{ checksum ".circleci/config.yml" }}' }
+      - restore_cache: { key: 'check-iso-v1-{{ checksum "isos.props" }}-{{ checksum "build.gradle" }}-{{ checksum ".circleci/config.yml" }}' }
       - run:
           name: check-setup
           command: |
@@ -64,48 +64,29 @@ jobs:
       - run: ./gradlew --parallel --stacktrace --continue --max-workers=2 build -Porg.gradle.java.installations.fromEnv=JAVA_11_HOME,JAVA_17_HOME,JAVA_21_HOME,JAVA_HOME
       - *check-no-files-changed
       - save_cache:
-          key: 'check-iso-v1-{{ checksum "isos.props" }}-{{ checksum "build.gradle" }}'
+          key: 'check-iso-v1-{{ checksum "isos.props" }}-{{ checksum "build.gradle" }}-{{ checksum ".circleci/config.yml" }}'
           paths: [ test-isos ]
       - run:
-          name: Delete ISOs for workspace
+          name: Publish (only on develop branch or tags)
           command: |
-            rm -rf ~/project/test-isos
-      - persist_to_workspace:
-          root: /home/circleci
-          paths: [ project ]
-      - save_cache:
-          key: 'gradle-wrapper-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}'
-          paths: [ ~/.gradle/wrapper ]
-      - save_cache:
-          key: 'check-gradle-cache-v1-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}'
-          paths: [ ~/.gradle/caches ]
-
-      - run:
-          command: mkdir -p ~/junit && find . -type f -regex ".*/build/.*TEST.*xml" -exec cp --parents {} ~/junit/ \;
-          when: always
-      - store_test_results: { path: ~/junit }
-      - store_artifacts: { path: ~/artifacts }
-
-  publish:
-    docker: [{ image: 'cimg/openjdk:11.0.22-node' }]
-    resource_class: medium
-    environment:
-      CIRCLE_TEST_REPORTS: /home/circleci/junit
-      CIRCLE_ARTIFACTS: /home/circleci/artifacts
-      GRADLE_OPTS: -Dorg.gradle.workers.max=1 -Dorg.gradle.jvmargs='-Xmx2147483648 --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED'
-      _JAVA_OPTIONS: -XX:ActiveProcessorCount=2 -XX:MaxRAM=4g -XX:+CrashOnOutOfMemoryError -XX:ErrorFile=/home/circleci/artifacts/hs_err_pid%p.log -XX:HeapDumpPath=/home/circleci/artifacts
-    steps:
-      - attach_workspace: { at: /home/circleci }
-      - restore_cache: { key: 'gradle-wrapper-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}' }
-      - restore_cache: { key: 'publish-gradle-cache-v1-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}' }
-      - run:
-          command: ./gradlew --parallel --stacktrace --continue --no-configuration-cache publish -Porg.gradle.java.installations.fromEnv=JAVA_11_HOME,JAVA_17_HOME,JAVA_21_HOME,JAVA_HOME
+            if [[ "$CIRCLE_BRANCH" == "develop" || -n "$CIRCLE_TAG" ]]; then
+              echo "Publishing artifacts..."
+              ./gradlew --parallel --stacktrace --continue --no-configuration-cache publish -Porg.gradle.java.installations.fromEnv=JAVA_11_HOME,JAVA_17_HOME,JAVA_21_HOME,JAVA_HOME
+            else
+              echo "Skipping publish (not on develop branch or tag build)"
+            fi
       - run:
           command: git status --porcelain
           when: always
       - save_cache:
-          key: 'publish-gradle-cache-v1-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}'
+          key: 'gradle-wrapper-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum ".circleci/config.yml" }}'
+          paths: [ ~/.gradle/wrapper ]
+      - save_cache:
+          key: 'gradle-cache-v1-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}-{{ checksum ".circleci/config.yml" }}'
           paths: [ ~/.gradle/caches ]
+      - run:
+          command: mkdir -p ~/junit && find . -type f -regex ".*/build/.*TEST.*xml" -exec cp --parents {} ~/junit/ \;
+          when: always
       - store_test_results: { path: ~/junit }
       - store_artifacts: { path: ~/artifacts }
 
@@ -125,7 +106,3 @@ workflows:
       - circle-all:
           requires: [ check ]
           filters: { tags: { only: /.*/ } }
-
-      - publish:
-          requires: [ circle-all ]
-          filters: { tags: { only: /.*/ }, branches: { only: develop } }
