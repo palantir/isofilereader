@@ -18,7 +18,6 @@ aliases:
         fi
 
 jobs:
-
   check:
     docker: [{ image: 'cimg/openjdk:11.0.22-node' }]
     resource_class: large
@@ -66,7 +65,7 @@ jobs:
       - *check-no-files-changed
       - save_cache:
           key: 'check-iso-v1-{{ checksum "isos.props" }}-{{ checksum "build.gradle" }}'
-          paths: [ ~/project/test-isos ]
+          paths: [ test-isos ]
       - run:
           name: Delete ISOs for workspace
           command: |
@@ -99,7 +98,7 @@ jobs:
       - attach_workspace: { at: /home/circleci }
       - restore_cache: { key: 'gradle-wrapper-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}' }
       - restore_cache: { key: 'publish-gradle-cache-v1-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}' }
-      - deploy:
+      - run:
           command: ./gradlew --parallel --stacktrace --continue --no-configuration-cache publish -Porg.gradle.java.installations.fromEnv=JAVA_11_HOME,JAVA_17_HOME,JAVA_21_HOME,JAVA_HOME
       - run:
           command: git status --porcelain
