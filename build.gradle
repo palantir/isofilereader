@@ -6,7 +6,7 @@ buildscript {
 
     dependencies {
         classpath 'com.palantir.gradle.jdks:gradle-jdks:0.73.0'
-        classpath 'com.palantir.gradle.jdkslatest:gradle-jdks-latest:0.24.0'
+        classpath 'com.palantir.gradle.jdkslatest:gradle-jdks-latest:0.25.0'
         // Purposefully staying on this old version of baseline, going above 6.0.0 requires all tooling to be JDK 17+ and gradle-jdks only supports 11 OR 21+
         classpath 'com.palantir.baseline:gradle-baseline-java:5.72.0'
         classpath 'com.palantir.gradle.externalpublish:gradle-external-publish-plugin:1.27.0'
