@@ -356,6 +356,10 @@ Sectors         | Contents
                 | Directory Records for Sub directories
                 | Data
 
+### UDF
+
+https://github.com/jet-logic/mkudfimg/ is a good tool for generating UDF ISOs, this was used to create images for testing.
+
 ## Outstanding Issues/Assumptions
 
 1. Technically an image can use any block size they want, they don't have to use the standard 2048 bytes per logical
