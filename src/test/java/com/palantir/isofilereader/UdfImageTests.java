@@ -413,4 +413,15 @@ public class UdfImageTests {
         }
         return newlyCreatedMd5;
     }
+
+    @Test
+    void tagChecksumTest() throws Exception {
+        File isoFile = new File("./src/test/resources/udf_flag_validation.iso");
+
+        try (IsoFileReader iso = new IsoFileReader(isoFile)) {
+            Assertions.assertTrue(iso.isUdfModeInUse());
+        } catch (Exception e) {
+            Assertions.fail("Could not get header", e);
+        }
+    }
 }

@@ -200,21 +200,21 @@ public class Tag {
      */
     public boolean tagChecksumIsCorrect() {
         int rollingCount = 0;
-        rollingCount += tagIdentifier[0];
-        rollingCount += tagIdentifier[1];
-        rollingCount += descriptorVersion[0];
-        rollingCount += descriptorVersion[1];
+        rollingCount += Byte.toUnsignedInt(tagIdentifier[0]);
+        rollingCount += Byte.toUnsignedInt(tagIdentifier[1]);
+        rollingCount += Byte.toUnsignedInt(descriptorVersion[0]);
+        rollingCount += Byte.toUnsignedInt(descriptorVersion[1]);
         rollingCount += reserved;
-        rollingCount += tagSerialNumber[0];
-        rollingCount += tagSerialNumber[1];
-        rollingCount += descriptorCrc[0];
-        rollingCount += descriptorCrc[1];
-        rollingCount += descriptorCrcLength[0];
-        rollingCount += descriptorCrcLength[1];
-        rollingCount += tagLocation[0];
-        rollingCount += tagLocation[1];
-        rollingCount += tagLocation[2];
-        rollingCount += tagLocation[3];
+        rollingCount += Byte.toUnsignedInt(tagSerialNumber[0]);
+        rollingCount += Byte.toUnsignedInt(tagSerialNumber[1]);
+        rollingCount += Byte.toUnsignedInt(descriptorCrc[0]);
+        rollingCount += Byte.toUnsignedInt(descriptorCrc[1]);
+        rollingCount += Byte.toUnsignedInt(descriptorCrcLength[0]);
+        rollingCount += Byte.toUnsignedInt(descriptorCrcLength[1]);
+        rollingCount += Byte.toUnsignedInt(tagLocation[0]);
+        rollingCount += Byte.toUnsignedInt(tagLocation[1]);
+        rollingCount += Byte.toUnsignedInt(tagLocation[2]);
+        rollingCount += Byte.toUnsignedInt(tagLocation[3]);
         return (rollingCount % 256) == Byte.toUnsignedInt(tagChecksum);
     }
 
