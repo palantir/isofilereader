@@ -335,6 +335,34 @@ public class IsoFileReader implements AutoCloseable {
     }
 
     /**
+     * Check if the image contains UDF format data.
+     *
+     * @return true if UDF format is present
+     */
+    public boolean hasUdfFormat() {
+        return udfIsoReader.checkForUdfData();
+    }
+
+    /**
+     * Check if the image contains ISO 9660 format data.
+     *
+     * @return true if ISO 9660 format is present
+     */
+    public boolean hasIsoFormat() {
+        try {
+            AbstractVolumeDescriptor[] headers = traditionalIsoReader.getVolumeDescriptors();
+            for (AbstractVolumeDescriptor vol : headers) {
+                if (new String(vol.getStandardIdentifier(), StandardCharsets.UTF_8).equals("CD001")) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    /**
      * Check if the reader is functioning in UDF mode.
      *
      * @return true if so
