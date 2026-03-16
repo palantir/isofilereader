@@ -5,11 +5,11 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.palantir.gradle.jdks:gradle-jdks:0.73.0'
-        classpath 'com.palantir.gradle.jdkslatest:gradle-jdks-latest:0.25.0'
+        classpath 'com.palantir.gradle.jdks:gradle-jdks:0.77.0'
+        classpath 'com.palantir.gradle.jdkslatest:gradle-jdks-latest:0.26.0'
         // Purposefully staying on this old version of baseline, going above 6.0.0 requires all tooling to be JDK 17+ and gradle-jdks only supports 11 OR 21+
         classpath 'com.palantir.baseline:gradle-baseline-java:5.72.0'
-        classpath 'com.palantir.gradle.externalpublish:gradle-external-publish-plugin:1.29.0'
+        classpath 'com.palantir.gradle.externalpublish:gradle-external-publish-plugin:1.35.0'
         classpath 'com.palantir.gradle.failure-reports:gradle-failure-reports:1.18.0'
         classpath 'com.palantir.gradle.idea-configuration:gradle-idea-configuration:0.8.0'
         classpath 'com.palantir.javaformat:gradle-palantir-java-format:2.72.0' // Bumping beyond requires JDK 17, due to spotless 3.0
@@ -19,9 +19,9 @@ buildscript {
 plugins {
     id 'java'
     id 'com.github.ben-manes.versions' version '0.53.0'
-    id 'com.palantir.git-version' version '4.2.0'
-    id 'com.autonomousapps.dependency-analysis' version '3.5.1'
-    id 'de.undercouch.download' version '5.6.0'
+    id 'com.palantir.git-version' version '5.0.0'
+    id 'com.autonomousapps.dependency-analysis' version '3.6.1'
+    id 'de.undercouch.download' version '5.7.0'
 }
 
 apply plugin: 'com.palantir.external-publish-jar'
@@ -107,6 +107,7 @@ publishMavenPublicationToMavenLocal.dependsOn(test)
 dependencies {
     testImplementation group: 'com.github.stephenc.java-iso-tools', name: 'loop-fs-iso-impl', version: '2.1.0'
     testImplementation 'javax.xml.bind:jaxb-api:2.3.1'
+    // Bumping JUnit requires JDK 17, https://github.com/junit-team/junit-framework/wiki/Upgrading-to-JUnit-6.0
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.3'
 }
