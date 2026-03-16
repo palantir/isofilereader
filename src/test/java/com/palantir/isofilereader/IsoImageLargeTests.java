@@ -393,15 +393,22 @@ public class IsoImageLargeTests {
         return true;
     }
 
+    /**
+     * Tests for NON-UDF Images.
+     */
     @Test
     void getAllImagesAndTest() {
         File folderOfImages = new File("./test_isos/");
         File[] allImageFiles = folderOfImages.listFiles();
         Assertions.assertNotNull(allImageFiles);
         for (File singleFile : allImageFiles) {
-            // TODO(#): We should see if the disk is UDF, if so, skip
-            if (!singleFile.getName().endsWith("iso") || "windows.iso".equals(singleFile.getName())) {
-                continue;
+            try (IsoFileReader isoImage = new IsoFileReader(singleFile)) {
+                if (isoImage.hasUdfFormat() && !isoImage.hasIsoFormat()) {
+                    System.out.println("Skipping: " + singleFile.getAbsolutePath());
+                    continue;
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
             System.out.println("Comparing Image: " + singleFile.getName());
             compareToPreviousLibrary(singleFile, false);

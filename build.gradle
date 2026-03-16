@@ -19,8 +19,8 @@ buildscript {
 plugins {
     id 'java'
     id 'com.github.ben-manes.versions' version '0.53.0'
-    id 'com.palantir.git-version' version '4.2.0'
-    id 'com.autonomousapps.dependency-analysis' version '3.5.1'
+    id 'com.palantir.git-version' version '5.0.0'
+    id 'com.autonomousapps.dependency-analysis' version '3.6.1'
     id 'de.undercouch.download' version '5.7.0'
 }
 
@@ -107,6 +107,7 @@ publishMavenPublicationToMavenLocal.dependsOn(test)
 dependencies {
     testImplementation group: 'com.github.stephenc.java-iso-tools', name: 'loop-fs-iso-impl', version: '2.1.0'
     testImplementation 'javax.xml.bind:jaxb-api:2.3.1'
+    // Bumping JUnit requires JDK 17, https://github.com/junit-team/junit-framework/wiki/Upgrading-to-JUnit-6.0
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.3'
 }
