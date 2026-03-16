@@ -403,7 +403,7 @@ public class IsoImageLargeTests {
         Assertions.assertNotNull(allImageFiles);
         for (File singleFile : allImageFiles) {
             try (IsoFileReader isoImage = new IsoFileReader(singleFile)) {
-                if (isoImage.hasUdfFormat() && !isoImage.hasIsoFormat()){
+                if (isoImage.hasUdfFormat() && !isoImage.hasIsoFormat()) {
                     System.out.println("Skipping: " + singleFile.getAbsolutePath());
                     continue;
                 }
