@@ -85,9 +85,9 @@ public abstract class AbstractInternalFile<T> {
     public abstract long getSize();
 
     /**
-     * String of parent file name, used to tell full file name and position.
+     * Get the parent file object.
      *
-     * @return string with specified file separators of full file name
+     * @return parent file object, or null if this is the root
      */
     public abstract T getParent();
 
